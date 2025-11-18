@@ -57,10 +57,92 @@ const filterByRating = (items: Item[]) : Item[] => {
 
 }
 
-const books = [
-  { title: 'Book A', rating: 4.5 },
-  { title: 'Book B', rating: 3.2 },
-  { title: 'Book C', rating: 5.0 },
-];
 
-console.log(filterByRating(books));
+type User = {
+    id: number; 
+    name: string; 
+    email: string; 
+    isActive: boolean
+}
+
+const filterActiveUsers  = (users: User[]) : User[] => {
+    const output = users.reduce((acc: User[] , user: User) => {
+        if(user.isActive === true){
+            acc.push(user)
+        }
+        return acc;
+
+    },[])
+
+    return output;
+}
+
+
+
+interface Book{
+    title: string; 
+    author: string; 
+    publishedYear: number; 
+    isAvailable: boolean
+}
+
+const printBookDetails = (book: Book) => {
+    const bookAvailable = book.isAvailable ? "Yes" : "No";
+    console.log(`Title: ${book.title}, Author: ${book.author}, Published: ${book.publishedYear}, Available: ${bookAvailable}`)
+}
+
+
+
+
+
+const getUniqueValues = (array1 : number[], array2 : number[]) : number[] => {
+    const combinedArray = [...array1, ...array2]; 
+    let uniqueArray : number[] = []; 
+
+    combinedArray.map((item )  => {
+        let duplicate = false; 
+        uniqueArray.map((uniqueItem : number) => {
+            if(uniqueItem === item){
+                duplicate = true; 
+            }
+        })
+         if(!duplicate ){
+            uniqueArray.push(item)
+         }
+    })
+   
+    return uniqueArray; 
+
+
+
+}
+
+
+
+type Product = {
+    name: string; 
+    price: number; 
+    quantity: number; 
+    discount? : number; 
+}
+
+const calculateTotalPrice = (products: Product[]) : number => {
+    let total = 0 ;
+    products.map((product: Product) => {
+        const baseTotal = product.price * product.quantity; 
+
+        if(product.discount !== undefined){
+            const discountAmount = baseTotal * (product.discount / 100)
+            total = total + (baseTotal - discountAmount)
+        }
+        else{
+            total = total + baseTotal;
+        }
+
+    })
+
+    return total;
+}
+
+
+
